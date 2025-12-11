@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "bcd.h"
+
 typedef struct REGF_HIVE REGF_HIVE;
 
 typedef struct REGF_KEY {
@@ -47,5 +49,8 @@ uint32_t RegfGetValueDataAsUint32(REGF_VALUE *value, int *ok);
 
 void RegfReleaseKey(REGF_KEY *key);
 void RegfReleaseValue(REGF_VALUE *value);
+
+/* Serialization helpers */
+int RegfSerializeBcdStore(const BCD_STORE *store, unsigned char **outBuffer, size_t *outSize);
 
 #endif /* REGF_H */
