@@ -1,6 +1,6 @@
 # Minimal Read-Only BCD Parser
 
-This project is a small, clean-room C99 implementation of a read-only Boot Configuration Data (BCD) parser and `bcdedit`-style command-line tool. It avoids Windows-specific APIs and only relies on standard C library facilities.
+This project is a small, clean-room C99 implementation of a read-only Boot Configuration Data (BCD) parser and `bcdedit`-style command-line tool. It avoids Windows-specific APIs and only relies on standard C library facilities. Alongside on-screen enumeration, the tool can also export a text rendering of the store for offline inspection.
 
 ## Components
 - **bcd.c / bcd.h**: Fixed-size in-memory model for BCD stores, objects, and elements with helper utilities for parsing and formatting object identifiers.
@@ -19,6 +19,7 @@ gcc -std=c99 -Wall -Wextra -pedantic bcdedit.c bcd.c regf.c bcd_parser.c -o bcde
 - Show help: `./bcdedit /?` or `./bcdedit /help`
 - Enumerate all objects from a hive: `./bcdedit /store /path/to/BCD /enum`
 - Enumerate a single object by identifier: `./bcdedit /store /path/to/BCD /enum {<guid>}`
+- Export the full store (or a single object) to a text file: `./bcdedit /store /path/to/BCD /export /tmp/store.txt [{<guid>}]`
 
 Output lists each object’s identifier, type, and known elements. Unknown elements are still displayed with raw identifiers to aid inspection.
 
