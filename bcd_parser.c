@@ -1,20 +1,8 @@
 #include "bcd_parser.h"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-
-/*
- * Minimal mapping from regf hive to BCD_STORE.
- * Assumptions (documented for clarity):
- * - The hive root key represents the BCD store root.
- * - Each immediate subkey under the root is a BCD object. The key name is a GUID string.
- * - Values under each object represent BCD elements. The value name is interpreted as a
- *   hexadecimal element type identifier (e.g., "11000001").
- * - Value data kind is mapped from registry type: REG_SZ -> string, REG_DWORD -> integer,
- *   REG_BINARY -> binary. Unknown types are marked as BCD_ELEMENT_UNKNOWN.
- * These rules are sufficient for enumerating objects and elements for this exercise.
- */
+#include <string.h>
 
 #define REG_TYPE_NONE 0
 #define REG_TYPE_SZ 1
@@ -122,3 +110,7 @@ int BcdStoreLoadFromHive(BCD_STORE *store, REGF_HIVE *hive)
     return BCD_OK;
 }
 
+int BcdStoreSerializeToHive(const BCD_STORE *store, unsigned char **outBuffer, size_t *outSize)
+{
+    return RegfSerializeBcdStore(store, outBuffer, outSize);
+}
